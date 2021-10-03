@@ -5,6 +5,7 @@ import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
 
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 class CacheSpec extends AnyFreeSpec with MockFactory with Matchers with ScalaFutures {
@@ -36,5 +37,7 @@ class CacheSpec extends AnyFreeSpec with MockFactory with Matchers with ScalaFut
     }
 
     //TODO: Multiple keys
+    //TODO: Many concurrent calls to cache happening at the same time: for same key, for different keys
+      //TODO: Use an ExecutionContext with multiple threads: more realistic case
   }
 }

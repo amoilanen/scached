@@ -14,8 +14,8 @@ class CacheSpec extends AnyFreeSpec with MockFactory with Matchers with ScalaFut
     val value = 42
 
     "should evaluate the key on the first access" in {
-      val fetch = mockFunction[String, Future[Int]]
-      fetch.expects(key).returning(Future.successful(value))
+      val fetch = stubFunction[String, Future[Int]]
+      fetch.when(key).returns(Future.successful(value))
 
       val cache = new Cache[String, Int](fetch)
       cache.get(key).futureValue shouldEqual value
@@ -23,8 +23,8 @@ class CacheSpec extends AnyFreeSpec with MockFactory with Matchers with ScalaFut
     }
 
     "should not evaluate value for same key twice" in {
-      val fetch = mockFunction[String, Future[Int]]
-      fetch.expects(key).returning(Future.successful(value))
+      val fetch = stubFunction[String, Future[Int]]
+      fetch.when(key).returns(Future.successful(value))
 
       val cache = new Cache[String, Int](fetch)
       cache.get(key).futureValue shouldEqual value

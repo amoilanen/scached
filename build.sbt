@@ -5,12 +5,16 @@ ThisBuild / version          := "0.1.0-SNAPSHOT"
 ThisBuild / organization     := "com.example"
 ThisBuild / organizationName := "example"
 
+val AkkaVersion = "2.6.16"
+
 lazy val root = (project in file("."))
   .settings(
     name := "scached",
     libraryDependencies ++= Seq(
       scalaTest % Test,
-      "org.scalamock" %% "scalamock" % "5.1.0" % Test
+      "org.scalamock" %% "scalamock" % "5.1.0" % Test,
+      "com.typesafe.akka" %% "akka-actor-typed" % AkkaVersion,
+      "com.typesafe.akka" %% "akka-actor-testkit-typed" % AkkaVersion % Test
     )
   )
 

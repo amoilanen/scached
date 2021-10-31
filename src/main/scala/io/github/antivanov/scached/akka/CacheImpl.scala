@@ -15,7 +15,7 @@ import scala.concurrent.duration.DurationInt
 class CacheImpl[K, V](fetch: Fetch[K, V]) extends Cache[K, V] {
 
   import CacheActor._
-  val actorSystem = ActorSystem(CacheActor(Map(), fetch), UUID.randomUUID().toString)
+  val actorSystem = ActorSystem(CacheActor(Map(), fetch), "cache-actor-" + UUID.randomUUID().toString)
   implicit val timeout = Timeout(5.seconds)
   implicit val scheduler: Scheduler = actorSystem.scheduler
 

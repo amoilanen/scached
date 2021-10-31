@@ -1,11 +1,14 @@
 - By default no expiration time, cache "memoizes" values indefinitely
   -- Use the concurrency primitives provided by Akka typed actors to implement the cache behavior behind the scenes?
+
 - It is possible to invalidate a value so that it will be refetched
 - It is possible to invalidate the whole cache
 - RefreshingCache: Possible to specify the expiration time for a cached item after which it will be "refreshed" in the background
   -- If refresh fails the old value is still used
--- Expiring values: after a certain time a value cached becomes stale and is discarded, possible to configure
+- Expiring values: after a certain time a value cached becomes stale and is discarded, possible to configure
+
 - Possible to specify the behavior on fetch failure: retain the previous value or fail
 - Support for ZIO/ZIO interface, reimplement in terms of ZIO and provide legacy Future interface?
+- Benchmarking and comparison with alternative libraries?
 
 - Documentation for the library/microsite

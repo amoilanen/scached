@@ -11,13 +11,13 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class CacheImpl[K, V](fetch: Fetch[K, V])(implicit ec: ExecutionContext) extends Cache[K, V] {
 
-  val map: Map[K, V] = new ConcurrentHashMap[K, V]().asScala
+  val values: Map[K, V] = new ConcurrentHashMap[K, V]().asScala
 
   override def get(key: K): Future[V] =
-    map.get(key) match {
+    values.get(key) match {
       case None =>
         fetch(key).map(value => {
-          map.putIfAbsent(key, value)
+          values.putIfAbsent(key, value)
           value
         })
       case Some(value) =>

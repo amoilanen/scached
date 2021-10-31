@@ -6,6 +6,7 @@ ThisBuild / organization     := "com.example"
 ThisBuild / organizationName := "example"
 
 val AkkaVersion = "2.6.16"
+val ZioVersion = "2.0.0-M4"
 
 lazy val root = (project in file("."))
   .settings(
@@ -14,7 +15,8 @@ lazy val root = (project in file("."))
       scalaTest % Test,
       "org.scalamock" %% "scalamock" % "5.1.0" % Test,
       "com.typesafe.akka" %% "akka-actor-typed" % AkkaVersion,
-      "com.typesafe.akka" %% "akka-actor-testkit-typed" % AkkaVersion % Test
+      "com.typesafe.akka" %% "akka-actor-testkit-typed" % AkkaVersion % Test,
+      "dev.zio" %% "zio" % ZioVersion
     )
   )
 

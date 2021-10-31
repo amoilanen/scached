@@ -9,6 +9,7 @@ import org.scalatest.matchers.should.Matchers
 import scala.concurrent.ExecutionContext.Implicits.global
 import io.github.antivanov.scached.akka.{CacheImpl => AkkaCache}
 import io.github.antivanov.scached.concurrent.{CacheImpl => ConcurrentCache}
+import io.github.antivanov.scached.zio.{CacheImpl => ZIOCache}
 import scala.concurrent.Future
 
 class CacheSpec extends AnyFreeSpec with MockFactory with Matchers with ScalaFutures {
@@ -17,7 +18,8 @@ class CacheSpec extends AnyFreeSpec with MockFactory with Matchers with ScalaFut
 
   val fixtures = List(
     CacheFixture[String, Int](new AkkaCache(_), "Akka actors"),
-    CacheFixture[String, Int](new ConcurrentCache(_), "ConcurrentHashMap")
+    CacheFixture[String, Int](new ConcurrentCache(_), "ConcurrentHashMap"),
+    CacheFixture[String, Int](new ZIOCache(_), "ZIO STM-based cache")
   )
 
   fixtures.foreach({

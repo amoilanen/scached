@@ -3,7 +3,7 @@ package io.github.antivanov.scached.zio
 import io.github.antivanov.scached.Cache.Fetch
 import izumi.reflect.Tag
 import zio.stm.TMap
-import zio.{Has, RIO, Task, ULayer, ZIO, ZLayer}
+import zio.{Has, RIO, Task, UIO, ULayer, ZIO, ZLayer}
 
 object Cache {
 
@@ -26,13 +26,14 @@ object Cache {
     } yield value
   }
 
-  def cacheOf[K: Tag, V: Tag](fetch: Fetch[K, V]): ULayer[Cache[K, V]] =
-    ZLayer.fromZIO(
-      for {
-        values <- TMap.empty[K, V].commit
-      } yield
-        new ServiceImpl[K, V](values, fetch)
-    )
+  def live[K: Tag, V: Tag](fetch: Fetch[K, V]): ULayer[Cache[K, V]] =
+    ZLayer.fromZIO(cacheOf(fetch))
+
+  def cacheOf[K: Tag, V: Tag](fetch: Fetch[K, V]): UIO[Cache.Service[K, V]] =
+    for {
+      values <- TMap.empty[K, V].commit
+    } yield
+      new ServiceImpl[K, V](values, fetch)
 
   def get[K: Tag, V: Tag](key: K): RIO[Cache[K, V], V] =
     ZIO.accessZIO(_.get.get(key))
